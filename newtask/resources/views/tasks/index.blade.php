@@ -84,13 +84,13 @@
                                         </button>
                                     </form>
                                 </td>
-                                 <!-- Task Update Button -->
-                                 <td>
-                                    <form action="/tasks/edit/{{$task->id}}" method="POST">
+                                 <!-- Task Edit Button -->
+                                <td>
+                                    <form action="{{ '/tasks/edit/' . $task->id }}" method="POST">
                                         @csrf
 
                                         <button type="submit" class="btn btn-info">
-                                            <i class="fa fa-btn fa-edit"></i>Edit
+                                            <i class="fa fa-btn fa-edit"></i>Eidt
                                         </button>
                                     </form>
                                 </td>

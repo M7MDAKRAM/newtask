@@ -1,3 +1,5 @@
+@extends('layout.app')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    <ul>
+    {{-- <ul>
         @foreach ($tasks as $task)
         <li>
           <a href="/task/{{$task->id}}">{{$task->name}}</a>
@@ -16,10 +18,7 @@
             {{$task->describtion}}
         </li>
         @endforeach
-    </ul>
-    @extends('layout.app')
-@section('content')
-
+    </ul> --}}
 
 <div class="container">
     <div class="col-sm-offset-2 col-sm-8">
@@ -31,9 +30,18 @@
             <div class="panel-body">
                 <!-- Display Validation Errors -->
                 <!-- New Task Form -->
-                <form action="/tasks/update/{{$task->id}}" method="POST" class="form-horizontal">
-                    @csrf
-                    @method('PUT')
+                @if ($errors->any())
+                     <div class="alert alert-danger">
+                         <ul>
+                             @foreach ($errors->all() as $error)
+                                 <li>{{ $error }}</li>
+                             @endforeach
+                         </ul>
+                     </div>
+                 @endif
+                <form action="{{ url('tasks/update/' . $task->id) }}" method="POST" class="form-horizontal">
+                    {{ csrf_field() }}
+                    {{ method_field('put') }}
 
                     <!-- Task Name -->
                     <div class="form-group">
@@ -43,6 +51,14 @@
                             <input type="text" name="name" id="task-name" class="form-control" value="{{$task->name}}">
                         </div>
                     </div>
+                     <!-- Update Task Button -->
+                     <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-6">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-pencil-square-o"></i>Update
+                            </button>
+                        </div>
+                     </div>
 
                     <!-- Add Task Button -->
                     <div class="form-group">
@@ -85,12 +101,12 @@
                                         </button>
                                     </form>
                                 </td>
-                                 <!-- Task Update Button -->
+                                 <!-- Task Edit Button -->
                                  <td>
-                                    <form action="/tasks/update/{{$task->id}}" method="POST">
+                                    <form action="{{ '/tasks/edit/' . $task->id }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-info">
-                                            <i class="fa fa-btn fa-edit"></i>Edit
+                                            <i class="fa fa-btn fa-edit"></i>Eidt
                                         </button>
                                     </form>
                                 </td>
